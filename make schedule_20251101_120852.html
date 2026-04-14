@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"] {
+            width: 95%;
+            height: 30px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            height: 40px;
+            background-color: #90d3ff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #6dc7fc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Make Schedule</h1>
+    </header>
+    <form action="" method="post">
+        <label for="material-name">Material Name:</label>
+        <input type="text" id="material-name" name="material-name" required>
+        
+        <label for="material-id">Material ID:</label>
+        <input type="text" id="material-id" name="material-id" required>
+        
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" name="start-date" required>
+        
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" name="end-date" required>
+        
+        <input type="submit" value="Make Schedule">
+    </form>
+</body>
+</html>

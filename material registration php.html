@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Registration</title>
+    <style>
+       body {
+  font-family: Arial, sans-serif;
+  background-color: #fff8f8;
+}
+h1{
+  text-align: center;
+}
+form {
+  color: #020202;
+  width: 35%;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+select, input[type="text"] {
+  width: 95%;
+  height: 15px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+  width: 100%;
+  height: 40px;
+  background-color: #6dc7fc;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #90d3ff;
+}
+    </style>
+</head>
+<body>
+    <?php
+    $servername = "localhost";
+    $username = "root"; // replace with your database username
+    $password = ""; // replace with your database password
+    $dbname = "your_database_name"; // replace with your database name
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Create table if not exists
+    $sql = "CREATE TABLE IF NOT EXISTS material_registration (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        resource_type VARCHAR(50) NOT NULL,
+        resource_name VARCHAR(50) NOT NULL,
+        resource_id VARCHAR(50) NOT NULL,
+        registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+
+    if ($conn->query($sql) === FALSE) {
+        die("Error creating table: " . $conn->error);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $resource_type = $_POST['resource-type'];
+        $resource_name = $_POST['resource-name'];
+        $resource_id = $_POST['resource-id'];
+
+        $stmt = $conn->prepare("INSERT INTO material_registration (resource_type, resource_name, resource_id) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $resource_type, $resource_name, $resource_id);
+
+        if ($stmt->execute()) {
+            echo "New record created successfully";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
+
+    $conn->close();
+    ?>
+    <form action="" method="post">
+        <h1>Material Registration</h1>
+        <label for="resource-type">Resource Type:</label>
+        <select name="resource-type" id="resource-type" required>
+            <option value="select">Select a resource type</option>
+            <option value="PC">PC</option>
+            <option value="DESKTOP">DESKTOP</option>
+            <option value="PRINTER">PRINTER</option>
+            <option value="PROJECTOR">PROJECTOR</option>
+            <option value="OTHERS">OTHERS</option>
+        </select>
+        <br><br>
+        <label for="resource-name">Resource Name:</label>
+        <input type="text" id="resource-name" name="resource-name" required>
+        <br><br>
+        <label for="resource-id">Resource ID or Serial Number:</label>
+        <input type="text" id="resource-id" name="resource-id" required>
+        <br><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

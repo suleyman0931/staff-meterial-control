@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <?php 
+ $servername = "localhost";
+ $username = "root";
+ $password = "";
+$dbname = "online_registration";
+
+// Create connection
+$conn = new mysqli($servername , $username, $password, $dbname);
+ $sql= "insert into student value( )"
+
+if(isset([$_POST])){
+
+}
+
+
+
+
+
+
+    ?>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+  </head>
+  <body>
+    <form action="validation.html" method="post">
+      <h2>registration</h2>
+      <label for=""> name</label>
+      <input type="text" name="name" id="name" /><br />
+      <span id="nameerror" style="color: red"></span><br />
+      <label for="">password</label>
+      <input type="text" name="password" id="password" /><br />
+      <span id="paasworderror"></span>
+      <div id="error"></div>
+      <input type="submit" value="register" onclick="return formvalidate()" />
+    </form>
+  </body>
+  <script>
+    function formvalidate() {
+      var name = document.getElementById("name").value;
+      var password = document.getElementById("paasword").value;
+      //   var nameerror = document.getElementById("nameerror");
+      //   var passworderror = document.getElementById("paswworderror");
+
+      nameerror.innerHTML = "";
+      if (name == "") {
+        nameerror.innerHTML = "name must not be empty";
+        return false;
+      }
+    }
+  </script>
+</html>

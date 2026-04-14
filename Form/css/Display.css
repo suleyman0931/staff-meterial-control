@@ -1,0 +1,39 @@
+table{
+    background-color: aliceblue;
+    width: 99%;
+}
+th{
+    background-color: rgb(63, 54, 54);
+    color: rgb(226, 227, 229);
+}
+tr:nth-child(even){
+    background-color: #cac0c0;
+}
+tr:nth-child(odd){
+    background-color: #fff;
+}
+.update ,.delete{
+    color: white;
+    width: 40px;
+    height: 20px;
+}
+.update{
+    background-color: #0283d4;
+
+}
+.update:hover{
+    background-color: #1b9ad1;
+}
+.delete{
+    background-color: #d32f2f;
+}
+.delete:hover{
+    background-color: #bf1212;
+}
+table ,th ,td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px 0;
+    border-radius: 4px;
+    
+}

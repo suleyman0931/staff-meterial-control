@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Resource</title>
+    <style>
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 95%;
+            height: 40px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="checkbox"] {
+            margin-bottom: 20px;
+            width: 20px;
+            height: 20px;
+        }
+        input[type="submit"] {
+            width: 49%;
+            height: 40px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:first-child {
+            background-color: #337ab7;
+            color: #fff;
+        }
+        input[type="submit"]:last-child {
+            background-color: #337ab7;
+            color: #fff;
+        }
+        input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Transfer Resource</h1>
+    </header>
+    
+    <?php
+    $servername = "localhost";
+    $username = "root"; // replace with your database username
+    $password = ""; // replace with your database password
+    $dbname = "your_database_name"; // replace with your database name
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Create table if not exists
+    $sql = "CREATE TABLE IF NOT EXISTS transfer_resource (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        resource_name VARCHAR(50) NOT NULL,
+        resource_id VARCHAR(50) NOT NULL,
+        sender_name VARCHAR(50) NOT NULL,
+        receiver_name VARCHAR(50) NOT NULL,
+        transfer_confirmed BOOLEAN NOT NULL,
+        transfer_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+
+    if ($conn->query($sql) === FALSE) {
+        die("Error creating table: " . $conn->error);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $resource_name = $_POST['resource-name'];
+        $resource_id = $_POST['resource-id'];
+        $sender_name = $_POST['sender-name'];
+        $receiver_name = $_POST['receiver-name'];
+        $transfer_confirmed = isset($_POST['transfer-checkbox']) ? 1 : 0;
+
+        $stmt = $conn->prepare("INSERT INTO transfer_resource (resource_name, resource_id, sender_name, receiver_name, transfer_confirmed) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssi", $resource_name, $resource_id, $sender_name, $receiver_name, $transfer_confirmed);
+
+        if ($stmt->execute()) {
+            echo "New record created successfully";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
+
+    $conn->close();
+    ?>
+
+    <form action="" method="post">
+        <label for="resource-name">Resource Name:</label>
+        <input type="text" id="resource-name" name="resource-name" required><br><br>
+        
+        <label for="resource-id">Resource ID:</label>
+        <input type="text" id="resource-id" name="resource-id" required><br><br>
+        
+        <label for="sender-name">Sender Name:</label>
+        <input type="text" id="sender-name" name="sender-name" required><br><br>
+        
+        <label for="receiver-name">Receiver Name:</label>
+        <input type="text" id="receiver-name" name="receiver-name" required><br><br>
+        
+        <input type="checkbox" id="transfer-checkbox" name="transfer-checkbox">
+        <label for="transfer-checkbox">I am transferring the above material to Receiver Name</label><br><br>
+        
+        <input type="submit" value="Send">
+        <input type="submit" value="Request">
+    </form>
+</body>
+</html>

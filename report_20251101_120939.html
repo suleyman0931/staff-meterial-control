@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="table-container">
+        <h2> Reports</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Material Type</th>
+                    <th>Material Name</th>
+                    <th>Username</th>
+                    <th>Report Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Display reports from the database
+                include 'display_reports.php';
+                ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
